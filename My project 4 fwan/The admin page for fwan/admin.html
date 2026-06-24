@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Admin Panel | ORIOLINE & FORM TECH</title>
+  <!-- Google Fonts + Font Awesome 6 -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f1f2f6;
+      color: #1e1e2a;
+      line-height: 1.5;
+    }
+
+    /* admin layout */
+    .admin-wrapper {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      width: 280px;
+      background: #1e1e2a;
+      color: #e0e0e0;
+      transition: all 0.3s;
+      flex-shrink: 0;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+    }
+
+    .sidebar-header {
+      padding: 28px 24px;
+      border-bottom: 1px solid #2d2d3a;
+    }
+
+    .sidebar-header h2 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: #c6a43b;
+    }
+
+    .sidebar-header p {
+      font-size: 0.75rem;
+      opacity: 0.7;
+      margin-top: 6px;
+    }
+
+    .sidebar-nav {
+      padding: 24px 0;
+    }
+
+    .nav-item {
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      cursor: pointer;
+      transition: 0.2s;
+      color: #cfcfdf;
+      font-weight: 500;
+    }
+
+    .nav-item i {
+      width: 24px;
+      font-size: 1.2rem;
+    }
+
+    .nav-item.active {
+      background: #2d2d3a;
+      color: #c6a43b;
+      border-left: 4px solid #c6a43b;
+    }
+
+    .nav-item:hover:not(.active) {
+      background: #2a2a36;
+      color: white;
+    }
+
+    /* MAIN CONTENT */
+    .main-content {
+      flex: 1;
+      padding: 30px 40px;
+      overflow-x: auto;
+    }
+
+    .admin-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 32px;
+    }
+
+    .admin-header h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+    }
+
+    .logout-btn {
+      background: #e0e0e0;
+      border: none;
+      padding: 8px 20px;
+      border-radius: 40px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .logout-btn:hover {
+      background: #c6a43b;
+      color: white;
+    }
+
+    /* Cards */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+
+    .stat-card {
+      background: white;
+      border-radius: 28px;
+      padding: 24px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+      border: 1px solid #edeef2;
+    }
+
+    .stat-card h3 {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #6c6c7e;
+      margin-bottom: 12px;
+    }
+
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #1e1e2a;
+    }
+
+    /* section panel */
+    .panel {
+      background: white;
+      border-radius: 32px;
+      padding: 28px 32px;
+      margin-bottom: 40px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.02);
+      border: 1px solid #eef0f5;
+    }
+
+    .panel-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .add-btn {
+      background: #c6a43b;
+      border: none;
+      padding: 8px 20px;
+      border-radius: 40px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+      color: #1e1e2a;
+    }
+
+    .add-btn:hover {
+      background: #a07f2c;
+      color: white;
+    }
+
+    /* Tables */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    .data-table th, .data-table td {
+      text-align: left;
+      padding: 14px 8px;
+      border-bottom: 1px solid #edf0f5;
+    }
+
+    .data-table th {
+      font-weight: 600;
+      color: #5a5a6e;
+    }
+
+    .badge {
+      background: #eef2ff;
+      padding: 4px 12px;
+      border-radius: 50px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .delete-btn {
+      background: none;
+      border: none;
+      color: #e06c6c;
+      cursor: pointer;
+      font-size: 1.1rem;
+      transition: 0.2s;
+    }
+
+    .delete-btn:hover {
+      color: #c0392b;
+      transform: scale(1.1);
+    }
+
+    .view-btn {
+      background: #4CAF50;
+      border: none;
+      color: white;
+      cursor: pointer;
+      margin-right: 8px;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      transition: 0.2s;
+    }
+
+    .view-btn:hover {
+      background: #45a049;
+    }
+
+    .back-btn {
+      background: #1e1e2a;
+      border: none;
+      color: white;
+      cursor: pointer;
+      padding: 10px 18px;
+      border-radius: 40px;
+      font-weight: 600;
+      transition: 0.2s;
+    }
+
+    .back-btn:hover {
+      background: #404454;
+    }
+
+    .edit-btn {
+      background: none;
+      border: none;
+      color: #c6a43b;
+      cursor: pointer;
+      margin-right: 8px;
+      font-size: 1rem;
+    }
+
+    /* modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+      z-index: 1100;
+    }
+
+    .modal-card {
+      background: white;
+      width: 500px;
+      max-width: 90%;
+      border-radius: 32px;
+      padding: 32px;
+      animation: fadeSlide 0.2s ease;
+    }
+
+    .modal-card input, .modal-card textarea {
+      width: 100%;
+      margin: 12px 0;
+      padding: 12px 16px;
+      border: 1px solid #ddd;
+      border-radius: 28px;
+      font-family: inherit;
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 800px) {
+      .admin-wrapper {
+        flex-direction: column;
+      }
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: static;
+      }
+      .main-content {
+        padding: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="admin-wrapper">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <h2><i class="fas fa-drafting-compass"></i> ORIOLINE Admin</h2>
+      <p>Content Management</p>
+    </div>
+    <div class="sidebar-nav">
+      <div class="nav-item active" data-tab="dashboard">
+        <i class="fas fa-tachometer-alt"></i> Dashboard
+      </div>
+      <div class="nav-item" data-tab="projects">
+        <i class="fas fa-building"></i> Projects
+      </div>
+      <div class="nav-item" data-tab="messages">
+        <i class="fas fa-envelope"></i> Messages
+      </div>
+      <div class="nav-item" data-tab="settings">
+        <i class="fas fa-sliders-h"></i> Site Settings
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main panel -->
+  <div class="main-content">
+    <div class="admin-header">
+      <h1 id="pageTitle">Dashboard</h1>
+      <button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+    </div>
+
+    <!-- Dashboard Tab -->
+    <div id="dashboardTab" class="tab-content">
+      <div class="stats-grid">
+        <div class="stat-card"><h3>Total Projects</h3><div class="stat-number" id="totalProjects">0</div></div>
+        <div class="stat-card"><h3>Messages Received</h3><div class="stat-number" id="totalMessages">0</div></div>
+        <div class="stat-card"><h3>Active Portfolio</h3><div class="stat-number" id="activeProjects">0</div></div>
+        <div class="stat-card"><h3>Page Views</h3><div class="stat-number" id="pageViews">0</div></div>
+      </div>
+      <div class="panel">
+        <h3 style="margin-bottom: 16px;">📋 Recent Messages</h3>
+        <table class="data-table" id="recentMessagesTable">
+          <thead><tr><th>Name</th><th>Email</th><th>Message</th><th>Date</th></tr></thead>
+          <tbody id="recentMessagesBody"><tr><td colspan="4">No messages yet</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Projects Tab -->
+    <div id="projectsTab" class="tab-content" style="display:none;">
+      <div class="panel" id="projectsTablePanel">
+        <div class="panel-title">
+          <span>📐 Manage Projects</span>
+          <button class="add-btn" id="addProjectBtn"><i class="fas fa-plus"></i> Add Project</button>
+        </div>
+        <table class="data-table">
+          <thead><tr><th>Title</th><th>Category</th><th>Location</th><th>Actions</th></tr></thead>
+          <tbody id="projectsList"></tbody>
+        </table>
+      </div>
+      <div class="panel" id="projectPreviewPanel" style="display:none;">
+        <div class="panel-title">
+          <span>🔎 Project Preview</span>
+          <button class="back-btn" id="backToProjectsBtn"><i class="fas fa-arrow-left"></i> Go Back</button>
+        </div>
+        <div id="previewContent" style="padding: 16px 0;">
+          <p>Select a project in the table to view it here.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Messages Tab -->
+    <div id="messagesTab" class="tab-content" style="display:none;">
+      <div class="panel">
+        <div class="panel-title">
+          <span>✉️ Contact Messages</span>
+          <button id="clearAllMessages" class="add-btn" style="background:#e06c6c; color:white;">Clear All</button>
+        </div>
+        <table class="data-table">
+          <thead><tr><th>Name</th><th>Email</th><th>Message</th><th>Date</th><th>Action</th></tr></thead>
+          <tbody id="allMessagesList"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Settings Tab -->
+    <div id="settingsTab" class="tab-content" style="display:none;">
+      <div class="panel">
+        <h3>⚙️ General Settings</h3>
+        <p style="margin: 20px 0;">Configure contact email and hero title for the main site.</p>
+        <label>Office Email:</label>
+        <input type="email" id="siteEmail" style="width:100%; margin:8px 0 20px; padding:12px; border-radius:40px; border:1px solid #ccc;">
+        <label>Hero Headline:</label>
+        <input type="text" id="heroHeadline" style="width:100%; margin:8px 0 20px; padding:12px; border-radius:40px;">
+        <button id="saveSettingsBtn" class="add-btn">Save Changes</button>
+        <div style="margin-top: 30px; background:#f8f9fc; border-radius:28px; padding:20px;">
+          <p><strong>💡 Sync Info:</strong> Data is stored in localStorage and linked to main site (index.html). Changes reflect across both pages.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal for add/edit project -->
+<div id="projectModal" class="modal">
+  <div class="modal-card">
+    <h3 id="modalTitle">Add New Project</h3>
+    <input type="text" id="projectTitle" placeholder="Project Title (e.g. Modern Villa)">
+    <input type="text" id="projectCategory" placeholder="Category (Residential / Commercial)">
+    <input type="text" id="projectLocation" placeholder="Location (e.g. Lagos, Nigeria)">
+    <textarea id="projectDesc" rows="2" placeholder="Short description"></textarea>
+    <div class="modal-actions">
+      <button id="cancelModalBtn" style="background:#e2e2e2;">Cancel</button>
+      <button id="saveProjectBtn" class="add-btn">Save Project</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ---------- DATA MODELS (shared with main site) ----------
+  let adminProjects = [];
+  let adminMessages = [];
+
+  // load from localStorage (synchronized with main website)
+  function loadData() {
+    const storedProjects = localStorage.getItem('orioline_projects');
+    const storedMessages = localStorage.getItem('orioline_messages');
+    const storedSettings = localStorage.getItem('orioline_settings');
+
+    if(storedProjects) {
+      adminProjects = JSON.parse(storedProjects);
+    } else {
+      // default projects based on original site
+      adminProjects = [
+        { id: "proj1", title: "Luxury Residence", category: "Residential", location: "Lekki, Lagos", description: "A sophisticated modern home with private pool." },
+        { id: "proj2", title: "Office Complex", category: "Commercial", location: "Victoria Island", description: "Dynamic workspace designed for collaboration." },
+        { id: "proj3", title: "Modern Villa", category: "Residential", location: "Banana Island", description: "Minimalist architecture with panoramic glass walls." },
+        { id: "proj4", title: "Retail Center", category: "Commercial", location: "Ikeja", description: "High-traffic commercial space with vibrant aesthetics." }
+      ];
+      saveProjects();
+    }
+
+    if(storedMessages) {
+      adminMessages = JSON.parse(storedMessages);
+    } else {
+      adminMessages = [];
+      saveMessages();
+    }
+
+    if(storedSettings) {
+      const sets = JSON.parse(storedSettings);
+      document.getElementById('siteEmail').value = sets.siteEmail || 'hello@oriolineform.com';
+      document.getElementById('heroHeadline').value = sets.heroHeadline || 'Innovative Architecture & Design Solutions';
+    } else {
+      document.getElementById('siteEmail').value = 'hello@oriolineform.com';
+      document.getElementById('heroHeadline').value = 'Innovative Architecture & Design Solutions';
+    }
+    updateUI();
+  }
+
+  function saveProjects() {
+    localStorage.setItem('orioline_projects', JSON.stringify(adminProjects));
+  }
+  function saveMessages() {
+    localStorage.setItem('orioline_messages', JSON.stringify(adminMessages));
+  }
+  function saveSettings() {
+    const settings = {
+      siteEmail: document.getElementById('siteEmail').value,
+      heroHeadline: document.getElementById('heroHeadline').value
+    };
+    localStorage.setItem('orioline_settings', JSON.stringify(settings));
+    alert('Settings saved! Main site will reflect changes.');
+  }
+
+  // helper: add message from main site (exposed via global function, but admin can also add test)
+  window.addContactMessage = function(name, email, text) {
+    const newMsg = {
+      id: Date.now(),
+      name: name,
+      email: email,
+      message: text,
+      date: new Date().toLocaleString()
+    };
+    adminMessages.unshift(newMsg);
+    saveMessages();
+    updateUI();
+  };
+
+  // delete message
+  function deleteMessage(id) {
+    adminMessages = adminMessages.filter(m => m.id != id);
+    saveMessages();
+    updateUI();
+  }
+
+  function deleteProject(id) {
+    adminProjects = adminProjects.filter(p => p.id !== id);
+    saveProjects();
+    updateUI();
+  }
+
+  function addProject(project) {
+    const newId = 'proj_' + Date.now();
+    adminProjects.push({ id: newId, ...project });
+    saveProjects();
+    updateUI();
+  }
+
+  function updateProject(updated) {
+    const index = adminProjects.findIndex(p => p.id === updated.id);
+    if(index !== -1) adminProjects[index] = updated;
+    saveProjects();
+    updateUI();
+  }
+
+  // Render UI
+  function updateUI() {
+    // dashboard counts
+    document.getElementById('totalProjects').innerText = adminProjects.length;
+    document.getElementById('totalMessages').innerText = adminMessages.length;
+    document.getElementById('activeProjects').innerText = adminProjects.filter(p => p.category).length;
+    document.getElementById('pageViews').innerText = localStorage.getItem('pageViews') || 0;
+
+    // recent messages (last 3)
+    const recentBody = document.getElementById('recentMessagesBody');
+    if(adminMessages.length === 0) {
+      recentBody.innerHTML = '<tr><td colspan="4">No messages yet</td></tr>';
+    } else {
+      recentBody.innerHTML = adminMessages.slice(0,3).map(msg => `
+        <tr>
+          <td>${escapeHtml(msg.name)}</td>
+          <td>${escapeHtml(msg.email || '-')}</td>
+          <td>${escapeHtml(msg.message.substring(0, 50))}${msg.message.length>50?'...':''}</td>
+          <td>${msg.date || 'just now'}</td>
+        </tr>
+      `).join('');
+    }
+
+    // projects list table
+    const projectsContainer = document.getElementById('projectsList');
+    if(adminProjects.length === 0) {
+      projectsContainer.innerHTML = '<tr><td colspan="4">No projects added yet.</td></tr>';
+    } else {
+      projectsContainer.innerHTML = adminProjects.map(proj => `
+        <tr>
+          <td>${escapeHtml(proj.title)}</td>
+          <td>${escapeHtml(proj.category)}</td>
+          <td>${escapeHtml(proj.location)}</td>
+          <td>
+            <button class="view-btn" data-id="${proj.id}"><i class="fas fa-external-link-alt"></i></button>
+            <button class="edit-btn" data-id="${proj.id}" data-action="edit"><i class="fas fa-edit"></i></button>
+            <button class="delete-btn" data-id="${proj.id}" data-action="deleteProject"><i class="fas fa-trash-alt"></i></button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    // full messages table
+    const allMessagesBody = document.getElementById('allMessagesList');
+    if(adminMessages.length === 0) {
+      allMessagesBody.innerHTML = '<tr><td colspan="5">No messages yet</td></tr>';
+    } else {
+      allMessagesBody.innerHTML = adminMessages.map(msg => `
+        <tr>
+          <td>${escapeHtml(msg.name)}</td>
+          <td>${escapeHtml(msg.email || 'no email')}</td>
+          <td>${escapeHtml(msg.message)}</td>
+          <td>${msg.date || '—'}</td>
+          <td><button class="delete-btn" data-id="${msg.id}" data-action="deleteMsg"><i class="fas fa-trash-alt"></i></button></td>
+        </tr>
+      `).join('');
+    }
+
+    // attach delete / edit events dynamically
+    document.querySelectorAll('.delete-btn[data-action="deleteProject"]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const id = btn.getAttribute('data-id');
+        if(confirm('Delete project?')) deleteProject(id);
+      });
+    });
+    document.querySelectorAll('.delete-btn[data-action="deleteMsg"]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const id = parseInt(btn.getAttribute('data-id'));
+        if(confirm('Remove this message?')) deleteMessage(id);
+      });
+    });
+    document.querySelectorAll('.edit-btn[data-action="edit"]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const id = btn.getAttribute('data-id');
+        const project = adminProjects.find(p => p.id === id);
+        if(project) openEditModal(project);
+      });
+    });
+    document.querySelectorAll('.view-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.getAttribute('data-id');
+        const project = adminProjects.find(p => p.id === id);
+        if(project) openProjectPreview(project);
+      });
+    });
+  }
+
+  function openProjectPreview(project) {
+    const previewPanel = document.getElementById('projectPreviewPanel');
+    const tablePanel = document.getElementById('projectsTablePanel');
+    if(previewPanel && tablePanel) {
+      tablePanel.style.display = 'none';
+      previewPanel.style.display = 'block';
+      document.getElementById('previewContent').innerHTML = `
+        <div style="display:flex; flex-direction:column; gap:16px;">
+          <div>
+            <h3 style="margin-bottom:8px;">${escapeHtml(project.title)}</h3>
+            <p style="margin:0; color:#6c6c7e;">${escapeHtml(project.category)} • ${escapeHtml(project.location)}</p>
+          </div>
+          <div style="background:#f8f9fc; border-radius:24px; padding:20px;">
+            <p style="margin:0; line-height:1.7;">${escapeHtml(project.description || 'No description available.')}</p>
+          </div>
+          <div style="display:flex; gap:12px; flex-wrap:wrap;">
+            <button class="add-btn" id="previewEditBtn">Edit Project</button>
+            <button class="delete-btn" id="previewDeleteBtn">Delete Project</button>
+          </div>
+        </div>
+      `;
+
+      const previewEditBtn = document.getElementById('previewEditBtn');
+      if(previewEditBtn) {
+        previewEditBtn.addEventListener('click', () => openEditModal(project));
+      }
+      const previewDeleteBtn = document.getElementById('previewDeleteBtn');
+      if(previewDeleteBtn) {
+        previewDeleteBtn.addEventListener('click', () => {
+          if(confirm('Delete this project?')) {
+            deleteProject(project.id);
+            closeProjectPreview();
+          }
+        });
+      }
+    }
+  }
+
+  function closeProjectPreview() {
+    const previewPanel = document.getElementById('projectPreviewPanel');
+    const tablePanel = document.getElementById('projectsTablePanel');
+    if(previewPanel && tablePanel) {
+      previewPanel.style.display = 'none';
+      tablePanel.style.display = 'block';
+    }
+  }
+
+  function openEditModal(project) {
+    document.getElementById('modalTitle').innerText = 'Edit Project';
+    document.getElementById('projectTitle').value = project.title;
+    document.getElementById('projectCategory').value = project.category;
+    document.getElementById('projectLocation').value = project.location;
+    document.getElementById('projectDesc').value = project.description || '';
+    const saveBtn = document.getElementById('saveProjectBtn');
+    const modal = document.getElementById('projectModal');
+    // override save for edit
+    const tempHandler = () => {
+      const updated = {
+        id: project.id,
+        title: document.getElementById('projectTitle').value,
+        category: document.getElementById('projectCategory').value,
+        location: document.getElementById('projectLocation').value,
+        description: document.getElementById('projectDesc').value
+      };
+      updateProject(updated);
+      modal.style.display = 'none';
+      saveBtn.removeEventListener('click', tempHandler);
+      resetModalToAdd();
+    };
+    saveBtn.removeEventListener('click', window._addProjectHandler);
+    saveBtn.addEventListener('click', tempHandler);
+    window._editTempHandler = tempHandler;
+    modal.style.display = 'flex';
+  }
+
+  function resetModalToAdd() {
+    const saveBtn = document.getElementById('saveProjectBtn');
+    if(window._editTempHandler) {
+      saveBtn.removeEventListener('click', window._editTempHandler);
+      delete window._editTempHandler;
+    }
+    document.getElementById('modalTitle').innerText = 'Add New Project';
+    document.getElementById('projectTitle').value = '';
+    document.getElementById('projectCategory').value = '';
+    document.getElementById('projectLocation').value = '';
+    document.getElementById('projectDesc').value = '';
+    saveBtn.removeEventListener('click', window._addProjectHandler);
+    window._addProjectHandler = () => {
+      const newProj = {
+        title: document.getElementById('projectTitle').value,
+        category: document.getElementById('projectCategory').value,
+        location: document.getElementById('projectLocation').value,
+        description: document.getElementById('projectDesc').value
+      };
+      if(newProj.title.trim() === "") return alert("Title required");
+      addProject(newProj);
+      document.getElementById('projectModal').style.display = 'none';
+    };
+    saveBtn.addEventListener('click', window._addProjectHandler);
+  }
+
+  function escapeHtml(str) {
+    if(!str) return '';
+    return str.replace(/[&<>]/g, function(m) {
+      if(m === '&') return '&amp;';
+      if(m === '<') return '&lt;';
+      if(m === '>') return '&gt;';
+      return m;
+    });
+  }
+
+  // Tab switching
+  const tabs = document.querySelectorAll('.nav-item');
+  const contents = {
+    dashboard: document.getElementById('dashboardTab'),
+    projects: document.getElementById('projectsTab'),
+    messages: document.getElementById('messagesTab'),
+    settings: document.getElementById('settingsTab')
+  };
+  function switchTab(tabId) {
+    Object.keys(contents).forEach(key => { contents[key].style.display = 'none'; });
+    contents[tabId].style.display = 'block';
+    document.getElementById('pageTitle').innerText = tabId.charAt(0).toUpperCase() + tabId.slice(1);
+    tabs.forEach(tab => {
+      if(tab.getAttribute('data-tab') === tabId) tab.classList.add('active');
+      else tab.classList.remove('active');
+    });
+    if(tabId === 'projects') updateUI();
+    if(tabId === 'messages') updateUI();
+    if(tabId === 'dashboard') updateUI();
+  }
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const which = tab.getAttribute('data-tab');
+      switchTab(which);
+    });
+  });
+
+  // Modal controls
+  const modal = document.getElementById('projectModal');
+  document.getElementById('addProjectBtn').addEventListener('click', () => {
+    resetModalToAdd();
+    modal.style.display = 'flex';
+  });
+  document.getElementById('cancelModalBtn').addEventListener('click', () => {
+    modal.style.display = 'none';
+  });
+  document.getElementById('backToProjectsBtn').addEventListener('click', closeProjectPreview);
+  window.addEventListener('click', (e) => { if(e.target === modal) modal.style.display = 'none'; });
+
+  // clear all messages
+  document.getElementById('clearAllMessages').addEventListener('click', () => {
+    if(confirm('Delete ALL messages permanently?')) {
+      adminMessages = [];
+      saveMessages();
+      updateUI();
+    }
+  });
+
+  // save settings
+  document.getElementById('saveSettingsBtn').addEventListener('click', () => {
+    saveSettings();
+  });
+
+  // logout: redirect to main page (index.html) - if exists
+  document.getElementById('logoutBtn').addEventListener('click', () => {
+    window.location.href = 'index.html';
+  });
+
+  // simulate receiving messages from main site? we expose a global so main site's contact form can push to localStorage
+  // We also override the existing addContactMessage from main site via localStorage event sync. For now, we listen to storage changes
+  window.addEventListener('storage', (e) => {
+    if(e.key === 'orioline_messages') {
+      loadData();
+      updateUI();
+    }
+    if(e.key === 'orioline_projects') {
+      loadData();
+      updateUI();
+    }
+  });
+
+  // initial load
+  loadData();
+  switchTab('dashboard');
+  // ensure that modal handlers are set initially
+  window._addProjectHandler = null;
+  resetModalToAdd();
+</script>
+</body>
+</html>

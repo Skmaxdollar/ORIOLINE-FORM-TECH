@@ -1,0 +1,618 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #ffffff;
+  color: #1e1e2a;
+  line-height: 1.5;
+  scroll-behavior: smooth;
+}
+
+/* container utility */
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+/* buttons & elements */
+.btn {
+  display: inline-block;
+  background-color: #c6a43b;
+  color: #fff;
+  font-weight: 600;
+  padding: 12px 28px;
+  border-radius: 40px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  font-size: 0.95rem;
+  letter-spacing: 0.3px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.btn-outline-light {
+  background: transparent;
+  border: 1.5px solid #fff;
+  color: #fff;
+  box-shadow: none;
+}
+
+.btn-outline-light:hover {
+  background: #fff;
+  color: #1e1e2a;
+}
+
+.btn-dark {
+  background-color: #1e1e2a;
+  color: white;
+}
+
+.btn-dark:hover {
+  background-color: #c6a43b;
+  color: #1e1e2a;
+}
+
+.btn:hover {
+  background-color: #a07f2c;
+  transform: translateY(-2px);
+}
+
+/* navigation */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: #ffffff;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+  flex-wrap: wrap;
+}
+
+.logo h1 {
+  font-size: 1.7rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: #1e1e2a;
+}
+
+.logo span {
+  color: #c6a43b;
+  font-weight: 800;
+}
+
+.nav-links {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+}
+
+.nav-links a {
+  text-decoration: none;
+  font-weight: 500;
+  color: #2d2d3a;
+  transition: 0.2s;
+  font-size: 1rem;
+}
+
+.nav-links a:hover {
+  color: #c6a43b;
+}
+
+/* mobile menu */
+.menu-icon {
+  display: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+  color: #1e1e2a;
+}
+
+/* hero section */
+.hero {
+  background: linear-gradient(135deg, #f4f2ea 0%, #e9e5d9 100%);
+  border-radius: 0 0 48px 48px;
+  margin-bottom: 40px;
+  position: relative;
+}
+
+.hero-grid {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 60px 0 70px;
+  gap: 40px;
+}
+
+.hero-content {
+  flex: 1.2;
+}
+
+.hero-badge {
+  background: rgba(198, 164, 59, 0.15);
+  display: inline-block;
+  padding: 6px 16px;
+  border-radius: 40px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #a07f2c;
+  margin-bottom: 20px;
+}
+
+.hero-content h1 {
+  font-size: 3.3rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 20px;
+  color: #1a1a24;
+}
+
+.hero-content p {
+  font-size: 1.1rem;
+  color: #444;
+  max-width: 500px;
+  margin-bottom: 32px;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.hero-image {
+  flex: 0.9;
+  background: url('https://placehold.co/600x500/DDD7C8/5c4e2e?text=Modern+Architecture') center/cover no-repeat;
+  min-height: 360px;
+  border-radius: 32px;
+  box-shadow: 0 20px 35px -12px rgba(0,0,0,0.15);
+  transition: transform 0.3s ease;
+}
+
+/* about section */
+.about-section {
+  padding: 80px 0 40px;
+}
+
+.section-title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: #1e1e2a;
+  letter-spacing: -0.3px;
+}
+
+.section-sub {
+  color: #5a5a6e;
+  max-width: 700px;
+  margin-bottom: 48px;
+}
+
+.about-card {
+  background: #faf9f5;
+  padding: 40px;
+  border-radius: 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.02);
+  border: 1px solid #f0ede5;
+}
+
+/* services grid */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 32px;
+  margin: 40px 0 30px;
+}
+
+.service-item {
+  background: #ffffff;
+  padding: 32px 24px;
+  border-radius: 28px;
+  box-shadow: 0 10px 25px -10px rgba(0,0,0,0.05);
+  transition: all 0.25s ease;
+  border: 1px solid #efede8;
+  text-align: center;
+}
+
+.service-item i {
+  font-size: 2.5rem;
+  color: #c6a43b;
+  margin-bottom: 20px;
+}
+
+.service-item h3 {
+  font-size: 1.5rem;
+  margin-bottom: 12px;
+}
+
+.service-item p {
+  color: #5a5a6e;
+}
+
+.service-item:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 30px -12px rgba(0,0,0,0.1);
+  border-color: #e2d9c8;
+}
+
+/* portfolio & featured project */
+.portfolio-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  margin: 40px 0 24px;
+}
+
+/* Slideshow container */
+.slideshow-container {
+  position: relative;
+  background: #f7f5f0;
+  border-radius: 48px;
+  margin: 20px 0 30px;
+  overflow: hidden;
+}
+
+.slideshow-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  background: #f7f5f0;
+  border-radius: 48px;
+  min-height: 380px;
+  position: relative;
+}
+
+.slide {
+  display: none;
+  width: 100%;
+  flex-wrap: wrap;
+  animation: fadeIn 0.5s ease-in;
+}
+
+.slide.active {
+  display: flex;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.slide-img {
+  flex: 1.1;
+  background-size: cover;
+  background-position: center;
+  min-height: 380px;
+  background-color: #ddd;
+}
+
+.slide-content {
+  flex: 1;
+  padding: 48px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.slide-content h3 {
+  font-size: 1.9rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.slide-content p {
+  color: #5a5a6e;
+  line-height: 1.7;
+}
+
+.project-meta {
+  display: flex;
+  gap: 24px;
+  margin: 18px 0 20px;
+  font-weight: 500;
+  color: #c6a43b;
+}
+
+/* Navigation buttons */
+.slide-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.6);
+  color: white;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: 0.3s;
+  z-index: 10;
+}
+
+.slide-nav-btn:hover {
+  background: rgba(0,0,0,0.9);
+}
+
+.prev-btn {
+  left: 16px;
+}
+
+.next-btn {
+  right: 16px;
+}
+
+/* Slide indicators */
+.slide-indicators {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 10;
+}
+
+.slide-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.5);
+  cursor: pointer;
+  transition: 0.3s;
+  border: 2px solid transparent;
+}
+
+.slide-dot.active {
+  background: #c6a43b;
+  transform: scale(1.2);
+}
+
+.slide-dot:hover {
+  background: rgba(255,255,255,0.8);
+}
+
+.project-showcase {
+  background: #f7f5f0;
+  border-radius: 48px;
+  margin: 20px 0 30px;
+  display: flex;
+  flex-wrap: wrap;
+  overflow: hidden;
+}
+
+.project-img {
+  flex: 1.1;
+  background: url('https://placehold.co/700x500/B8A97C/ffffff?text=Luxury+Residence+Lekki') center/cover no-repeat;
+  min-height: 380px;
+}
+
+.project-details {
+  flex: 1;
+  padding: 48px 40px;
+}
+
+.project-details h3 {
+  font-size: 1.9rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.mini-portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 28px;
+  margin-top: 30px;
+}
+
+.portfolio-card {
+  background: white;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.05);
+  transition: 0.2s;
+}
+
+.portfolio-img {
+  height: 180px;
+  background-color: #ddd3c2;
+  background-size: cover;
+  background-position: center;
+}
+
+.portfolio-card h4 {
+  padding: 18px 18px 8px;
+  font-size: 1.2rem;
+}
+
+.portfolio-card p {
+  padding: 0 18px 18px;
+  color: #6c6c7e;
+}
+
+/* contact & CTA */
+.contact-section {
+  background: #1e1e2a;
+  color: white;
+  border-radius: 48px;
+  margin: 70px 0 50px;
+  padding: 60px 48px;
+}
+
+.contact-flex {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 48px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.contact-left h2 {
+  font-size: 2rem;
+  margin-bottom: 18px;
+}
+
+.contact-left p {
+  opacity: 0.8;
+  margin-bottom: 28px;
+}
+
+.message-input {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.message-input input {
+  flex: 2;
+  padding: 14px 18px;
+  border-radius: 60px;
+  border: none;
+  font-family: inherit;
+  outline: none;
+  background: #2d2d3a;
+  color: white;
+}
+
+.message-input input::placeholder {
+  color: #aaa;
+}
+
+.contact-right {
+  background: #2a2a38;
+  padding: 28px 32px;
+  border-radius: 32px;
+  min-width: 240px;
+}
+
+.contact-right i {
+  margin-right: 12px;
+  color: #c6a43b;
+}
+
+/* modal (popup) */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0,0,0,0.7);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  max-width: 420px;
+  width: 90%;
+  padding: 32px;
+  border-radius: 32px;
+  text-align: center;
+  animation: fadeSlide 0.3s ease;
+}
+
+.modal-content i {
+  font-size: 3rem;
+  color: #c6a43b;
+  margin-bottom: 16px;
+}
+
+.close-modal {
+  background: #1e1e2a;
+  margin-top: 20px;
+  padding: 10px 24px;
+  border-radius: 40px;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+@keyframes fadeSlide {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+footer {
+  padding: 48px 0 32px;
+  border-top: 1px solid #ece9e2;
+  margin-top: 20px;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 24px;
+  align-items: center;
+}
+
+.footer-links {
+  display: flex;
+  gap: 28px;
+}
+
+.footer-links a {
+  text-decoration: none;
+  color: #4b4b5e;
+  font-size: 0.9rem;
+}
+
+.footer-links a:hover {
+  color: #c6a43b;
+}
+
+@media (max-width: 900px) {
+  .nav-links {
+    display: none;
+    width: 100%;
+    flex-direction: column;
+    background: white;
+    padding: 20px;
+    border-radius: 32px;
+    margin-top: 20px;
+    gap: 16px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+  }
+  .nav-links.show {
+    display: flex;
+  }
+  .menu-icon {
+    display: block;
+  }
+  .hero-content h1 {
+    font-size: 2.4rem;
+  }
+  .hero-grid {
+    flex-direction: column;
+  }
+  .contact-section {
+    padding: 40px 28px;
+  }
+  .project-details {
+    padding: 32px;
+  }
+}
+
+@media (max-width: 650px) {
+  .container {
+    padding: 0 20px;
+  }
+  .section-title {
+    font-size: 1.8rem;
+  }
+}

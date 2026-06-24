@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>ORIOLINE & FORM TECH | Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="The_style.css">
+  <style>
+    .portfolio-banner {
+      padding: 80px 0 40px;
+      background: linear-gradient(135deg, #f4f2ea 0%, #e9e5d9 100%);
+      border-radius: 0 0 48px 48px;
+      margin-bottom: 40px;
+      text-align: center;
+    }
+    .portfolio-banner h1 {
+      font-size: 3rem;
+      margin-bottom: 16px;
+    }
+    .portfolio-banner p {
+      max-width: 760px;
+      margin: 0 auto;
+      color: #4f4f5e;
+      line-height: 1.8;
+      font-size: 1.05rem;
+    }
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-top: 32px;
+    }
+    .portfolio-card {
+      background: #ffffff;
+      border-radius: 28px;
+      padding: 28px 24px;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.06);
+      border: 1px solid #f1efe8;
+      min-height: 260px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .portfolio-card h3 {
+      margin-bottom: 12px;
+      font-size: 1.35rem;
+      color: #1e1e2a;
+    }
+    .portfolio-card p {
+      color: #5f5f70;
+      line-height: 1.7;
+      margin-bottom: 18px;
+    }
+    .portfolio-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      color: #6c6c7e;
+      font-size: 0.95rem;
+      margin-bottom: 18px;
+    }
+    .portfolio-meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .portfolio-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: auto;
+    }
+    .portfolio-footer .btn {
+      padding: 10px 24px;
+      border-radius: 999px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="navbar">
+        <div class="logo">
+          <h1>ORIOLINE<span>&</span>FORM TECH</h1>
+        </div>
+        <div class="menu-icon" id="mobileMenuIcon">
+          <i class="fas fa-bars"></i>
+        </div>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html#about">About</a></li>
+          <li><a href="index.html#services">Services</a></li>
+          <li><a href="portfolio.html">Portfolio</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="portfolio-banner">
+      <div class="container">
+        <h1>All Portfolio Projects</h1>
+        <p>Explore every project created for ORIOLINE & FORM TECH. This page loads all saved portfolio items dynamically from the admin panel so new projects appear immediately.</p>
+        <div style="margin-top: 28px;">
+          <a href="index.html" class="btn btn-dark"><i class="fas fa-home"></i> Back to Home</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="container">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+        <div>
+          <h2 class="section-title">Project Gallery</h2>
+          <p id="projectCount" class="section-sub">Loading projects...</p>
+        </div>
+      </div>
+      <div class="portfolio-grid" id="portfolioGrid"></div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <p>© 2024 ORIOLINE & FORM TECH. All rights reserved.</p>
+        <div class="footer-links">
+          <a href="index.html">Home</a>
+          <a href="portfolio.html">Portfolio</a>
+          <a href="index.html#contact">Contact</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    function loadPortfolioPage() {
+      const storedProjects = localStorage.getItem('orioline_projects');
+      const projects = storedProjects ? JSON.parse(storedProjects) : [];
+      const grid = document.getElementById('portfolioGrid');
+      const count = document.getElementById('projectCount');
+
+      if (!grid || !count) return;
+
+      if (projects.length === 0) {
+        count.textContent = 'No projects found yet. Add one through the admin panel.';
+        grid.innerHTML = '<div style="grid-column:1/-1; color:#6c6c7e; padding:24px; background:#faf9f5; border-radius:24px; border:1px solid #ece9df;">No portfolio items are currently saved.</div>';
+        return;
+      }
+
+      count.textContent = `${projects.length} project${projects.length === 1 ? '' : 's'} available in the portfolio.`;
+      grid.innerHTML = projects.map(proj => `
+        <div class="portfolio-card">
+          <div class="portfolio-meta">
+            <span><i class="fas fa-building"></i> ${proj.category || 'General'}</span>
+            <span><i class="fas fa-map-marker-alt"></i> ${proj.location || 'Unknown location'}</span>
+          </div>
+          <h3>${proj.title}</h3>
+          <p>${proj.description || 'No description provided for this project.'}</p>
+          <div class="portfolio-footer">
+            <span style="color:#9f9f9f; font-size:0.95rem;">Project ID: ${proj.id}</span>
+            <a href="admin.html" class="btn btn-outline-light">Edit in Admin</a>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    document.addEventListener('DOMContentLoaded', loadPortfolioPage);
+  </script>
+</body>
+</html>

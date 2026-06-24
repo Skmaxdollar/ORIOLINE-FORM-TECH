@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login | ORIOLINE & FORM TECH</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #1e1e2a 0%, #2d2d3a 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .login-container {
+      background: white;
+      padding: 48px;
+      border-radius: 32px;
+      width: 400px;
+      max-width: 90%;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    }
+    .login-container h2 {
+      color: #1e1e2a;
+      margin-bottom: 8px;
+    }
+    .login-container .sub {
+      color: #6c6c7e;
+      margin-bottom: 32px;
+    }
+    input {
+      width: 100%;
+      padding: 14px 18px;
+      margin: 12px 0;
+      border: 1px solid #e0e0e0;
+      border-radius: 40px;
+      font-family: inherit;
+      font-size: 1rem;
+    }
+    button {
+      width: 100%;
+      padding: 14px;
+      background: #c6a43b;
+      border: none;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-top: 16px;
+      transition: 0.2s;
+    }
+    button:hover {
+      background: #a07f2c;
+      color: white;
+    }
+    .error {
+      color: #e06c6c;
+      font-size: 0.85rem;
+      margin-top: 12px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h2>🔐 Admin Access</h2>
+    <p class="sub">Enter credentials to manage content</p>
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password">
+    <button onclick="login()">Login →</button>
+    <div id="errorMsg" class="error"></div>
+  </div>
+
+  <script>
+    function login() {
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      
+      // CHANGE THESE to your desired credentials
+      const validUsername = "admin";
+      const validPassword = "orioline2024";
+      
+      if(username === validUsername && password === validPassword) {
+        localStorage.setItem('admin_logged_in', 'true');
+        window.location.href = 'admin.html';
+      } else {
+        document.getElementById('errorMsg').innerText = 'Invalid username or password';
+      }
+    }
+  </script>
+</body>
+</html>
