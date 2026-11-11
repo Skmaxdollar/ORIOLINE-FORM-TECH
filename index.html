@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>ORIOLINE & FORM TECH | Architecture & Design</title>
+  <!-- Google Fonts + Font Awesome 6 (free) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- External CSS -->
+  <link rel="stylesheet" href="The_style.css">
+</head>
+<body>
+
+<!-- Modal for send message -->
+<div id="messageModal" class="modal">
+  <div class="modal-content">
+    <i class="fas fa-envelope-open-text"></i>
+    <h3>Email draft ready</h3>
+    <p>Your email app should open with your enquiry. Press Send there to deliver it to our team.</p>
+    <a class="btn" id="emailDraftLink" href="mailto:hello@oriolineform.com">Open email draft</a>
+    <button class="close-modal" id="closeModalBtn">Close</button>
+  </div>
+</div>
+
+<header>
+  <div class="container">
+    <div class="navbar">
+      <div class="logo">
+        <h1>ORIOLINE<span>&</span>FORM TECH</h1>
+      </div>
+      <div class="menu-icon" id="mobileMenuIcon">
+        <i class="fas fa-bars"></i>
+      </div>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="portfolio.html">Portfolio</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- Hero section -->
+  <div class="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-content">
+          <div class="hero-badge"><i class="fas fa-drafting-compass"></i> Architecture & Design</div>
+          <h1>Innovative Architecture & Design Solutions</h1>
+          <p>Creating exceptional spaces that blend innovation, functionality, and aesthetics. Bring your vision to life with ORIOLINE & FORM TECH.</p>
+          <div class="hero-buttons">
+            <a href="#contact" class="btn">Get in Touch</a>
+            <a href="portfolio.html" class="btn btn-outline-light" style="background:transparent; border-color:#1e1e2a; color:#1e1e2a;">View Portfolio</a>
+          </div>
+        </div>
+        <div class="hero-image"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- About Us -->
+    <section id="about" class="about-section">
+      <div class="about-card">
+        <h2 class="section-title">About Us</h2>
+        <p style="font-size:1.05rem; max-width: 85%;">ORIOLINE & FORM TECH is a leading architecture and design firm dedicated to creating exceptional spaces. We blend innovation, functionality, and aesthetics to bring your vision to life.</p>
+        <div>
+          <a href="#" class="btn btn-dark" style="background:#c6a43b; color:#1e1e2a;">Learn More →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Our Services -->
+    <section id="services">
+      <h2 class="section-title">Our Services</h2>
+      <p class="section-sub">Comprehensive design and project solutions from concept to completion</p>
+      <div class="services-grid">
+        <div class="service-item"><i class="fas fa-building"></i><h3>Architectural Design</h3><p>Innovative and sustainable building designs tailored to your needs.</p></div>
+        <div class="service-item"><i class="fas fa-couch"></i><h3>Interior Design</h3><p>Elegant, functional interiors that reflect your personality.</p></div>
+        <div class="service-item"><i class="fas fa-chart-line"></i><h3>Project Management</h3><p>End-to-end coordination ensuring timely delivery & quality.</p></div>
+        <div class="service-item"><i class="fas fa-cube"></i><h3>3D Visualization</h3><p>Realistic renders to preview your space before construction.</p></div>
+      </div>
+    </section>
+
+    <!-- Portfolio Section + featured project slideshow -->
+    <section id="portfolio">
+      <div class="portfolio-header">
+        <h2 class="section-title" style="margin-bottom:0;">Featured Projects</h2>
+        <a href="portfolio.html" style="color:#c6a43b; font-weight:500;">View Portfolio →</a>
+      </div>
+
+      <!-- Slideshow Container -->
+      <div class="slideshow-container">
+        <div id="slideshow-wrapper" class="slideshow-wrapper">
+          <!-- Slides will be dynamically inserted here -->
+        </div>
+        
+        <!-- Navigation buttons -->
+        <button id="prevSlideBtn" class="slide-nav-btn prev-btn"><i class="fas fa-chevron-left"></i></button>
+        <button id="nextSlideBtn" class="slide-nav-btn next-btn"><i class="fas fa-chevron-right"></i></button>
+        
+        <!-- Slide indicators -->
+        <div id="slideIndicators" class="slide-indicators"></div>
+      </div>
+    </section>
+
+    <!-- Contact / CTA + message input -->
+    <section id="contact" class="contact-section">
+      <div class="contact-flex">
+        <div class="contact-left">
+          <h2>Let's discuss your next project</h2>
+          <p>Reach out to our team for a consultation. We respond within 24 hours.</p>
+          <div class="message-input">
+            <input type="text" id="messageName" placeholder="Your name" autocomplete="off">
+            <input type="email" id="messageEmail" placeholder="Email address">
+            <input type="text" id="messageText" placeholder="Tell us about your vision...">
+            <button id="sendMessageFooterBtn" class="btn" style="background:#c6a43b; color:#1e1e2a;">Send Message →</button>
+          </div>
+        </div>
+        <div class="contact-right">
+          <p><i class="fas fa-envelope"></i> hello@oriolineform.com</p>
+          <p><i class="fas fa-phone-alt"></i> +234 812 345 6789</p>
+          <p><i class="fas fa-map-pin"></i> Lagos, Nigeria</p>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-content">
+      <p>© 2024 ORIOLINE & FORM TECH. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- External JavaScript -->
+<script src="script.js"></script>
+<script>
+  // Load settings and projects from localStorage
+  function loadSiteData() {
+    // Load settings
+    const storedSettings = localStorage.getItem('orioline_settings');
+    if (storedSettings) {
+      const sets = JSON.parse(storedSettings);
+      // Update hero headline
+      const heroTitle = document.querySelector('.hero-content h1');
+      if (heroTitle && sets.heroHeadline) {
+        heroTitle.textContent = sets.heroHeadline;
+      }
+      // Update contact email
+      const emailPara = document.querySelector('.contact-right p:first-child');
+      if (emailPara && sets.siteEmail) {
+        emailPara.innerHTML = '<i class="fas fa-envelope"></i> ' + sets.siteEmail;
+      }
+    }
+
+    // Load projects
+    const storedProjects = localStorage.getItem('orioline_projects');
+    let projects = [];
+    if (storedProjects) {
+      projects = JSON.parse(storedProjects);
+    } else {
+      // Default projects
+      projects = [
+        { id: "proj1", title: "Luxury Residence", category: "Residential", location: "Lekki, Lagos", description: "A sophisticated modern home with private pool.", featured: true, image: "" },
+        { id: "proj2", title: "Office Complex", category: "Commercial", location: "Victoria Island", description: "Dynamic workspace designed for collaboration.", featured: true, image: "" },
+        { id: "proj3", title: "Modern Villa", category: "Residential", location: "Banana Island", description: "Minimalist architecture with panoramic glass walls.", featured: true, image: "" },
+        { id: "proj4", title: "Retail Center", category: "Commercial", location: "Ikeja", description: "High-traffic commercial space with vibrant aesthetics.", featured: true, image: "" }
+      ];
+    }
+
+    projects = projects.map((project, index) => ({
+      ...project,
+      featured: typeof project.featured === 'boolean' ? project.featured : index < 4,
+      image: typeof project.image === 'string' ? project.image : ''
+    }));
+
+    const slideshowWrapper = document.getElementById('slideshow-wrapper');
+    const indicatorsContainer = document.getElementById('slideIndicators');
+    const featuredProjects = projects.filter(project => project.featured).slice(0, 4);
+    if (!slideshowWrapper || !indicatorsContainer) return;
+
+    if (featuredProjects.length === 0) {
+      slideshowWrapper.innerHTML = '<div class="no-featured-projects">Featured projects are being updated. Please check back soon.</div>';
+      document.getElementById('prevSlideBtn').hidden = true;
+      document.getElementById('nextSlideBtn').hidden = true;
+      indicatorsContainer.hidden = true;
+      return;
+    }
+
+    const escapeSiteHtml = (value) => String(value || '').replace(/[&<>"']/g, (character) => ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;'
+    }[character]));
+
+    slideshowWrapper.innerHTML = featuredProjects.map((project, index) => `
+      <div class="slide ${index === 0 ? 'active' : ''}">
+        <div class="slide-img${/^data:image\/jpeg;base64,[A-Za-z0-9+/=]+$/.test(project.image) ? '' : ' no-project-image'}"></div>
+        <div class="slide-content">
+          <h3>${escapeSiteHtml(project.title)}</h3>
+          <div class="project-meta">
+            <span><i class="fas fa-map-marker-alt"></i> ${escapeSiteHtml(project.location || 'Location available on request')}</span>
+            <span><i class="fas fa-building"></i> ${escapeSiteHtml(project.category || 'General')}</span>
+          </div>
+          <p style="margin-bottom: 24px;">${escapeSiteHtml(project.description)}</p>
+          <button class="sendMessageFromSlide btn btn-dark" style="background:#c6a43b; color:#111; width:fit-content;"><i class="fas fa-paper-plane"></i> Discuss a Similar Project</button>
+        </div>
+      </div>
+    `).join('');
+    featuredProjects.forEach((project, index) => {
+      if(/^data:image\/jpeg;base64,[A-Za-z0-9+/=]+$/.test(project.image)) {
+        slideshowWrapper.querySelectorAll('.slide-img')[index].style.backgroundImage = `url("${project.image}")`;
+      }
+    });
+
+    indicatorsContainer.innerHTML = featuredProjects.map((_, index) => `
+      <button type="button" class="slide-dot ${index === 0 ? 'active' : ''}" data-index="${index}" aria-label="Show featured project ${index + 1}"></button>
+    `).join('');
+    document.getElementById('prevSlideBtn').hidden = featuredProjects.length < 2;
+    document.getElementById('nextSlideBtn').hidden = featuredProjects.length < 2;
+
+    let currentSlide = 0;
+    function showSlide(index) {
+      currentSlide = (index + featuredProjects.length) % featuredProjects.length;
+      slideshowWrapper.querySelectorAll('.slide').forEach((slide, slideIndex) => {
+        slide.classList.toggle('active', slideIndex === currentSlide);
+      });
+      indicatorsContainer.querySelectorAll('.slide-dot').forEach((dot, dotIndex) => {
+        dot.classList.toggle('active', dotIndex === currentSlide);
+      });
+    }
+
+    document.getElementById('nextSlideBtn').addEventListener('click', () => showSlide(currentSlide + 1));
+    document.getElementById('prevSlideBtn').addEventListener('click', () => showSlide(currentSlide - 1));
+    indicatorsContainer.querySelectorAll('.slide-dot').forEach((dot) => {
+      dot.addEventListener('click', () => showSlide(Number(dot.dataset.index)));
+    });
+
+    document.querySelectorAll('.sendMessageFromSlide').forEach((button) => {
+      button.addEventListener('click', () => {
+        const nameField = document.getElementById('messageName');
+        if (nameField && nameField.value.trim() === '') {
+          document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+          alert('Please fill your name and message in the contact section below.');
+        } else if (typeof handleSendMessage === 'function') {
+          handleSendMessage();
+        }
+      });
+    });
+  }
+
+  // Page view counter
+  let views = parseInt(localStorage.getItem('pageViews') || 0);
+  views++;
+  localStorage.setItem('pageViews', views);
+
+  // Load data on page load
+  document.addEventListener('DOMContentLoaded', loadSiteData);
+</script>
+</body>
+</html>SSSS
