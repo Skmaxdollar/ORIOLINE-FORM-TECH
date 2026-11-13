@@ -16,9 +16,8 @@
 <div id="messageModal" class="modal">
   <div class="modal-content">
     <i class="fas fa-envelope-open-text"></i>
-    <h3>Email draft ready</h3>
-    <p>Your email app should open with your enquiry. Press Send there to deliver it to our team.</p>
-    <a class="btn" id="emailDraftLink" href="mailto:hello@oriolineform.com">Open email draft</a>
+    <h3>Message sent</h3>
+    <p>Your message has been delivered to our team. We will get back to you soon.</p>
     <button class="close-modal" id="closeModalBtn">Close</button>
   </div>
 </div>
@@ -138,55 +137,49 @@
       <div class="footer-links">
         <a href="#">Privacy Policy</a>
         <a href="#">Terms of Service</a>
+        <a href="admin/login.html">Admin</a>
       </div>
     </div>
   </div>
 </footer>
 
 <!-- External JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script src="supabase-client.js"></script>
 <script src="script.js"></script>
 <script>
-  // Load settings and projects from localStorage
-  function loadSiteData() {
-    // Load settings
-    const storedSettings = localStorage.getItem('orioline_settings');
-    if (storedSettings) {
-      const sets = JSON.parse(storedSettings);
-      // Update hero headline
-      const heroTitle = document.querySelector('.hero-content h1');
-      if (heroTitle && sets.heroHeadline) {
-        heroTitle.textContent = sets.heroHeadline;
-      }
-      // Update contact email
-      const emailPara = document.querySelector('.contact-right p:first-child');
-      if (emailPara && sets.siteEmail) {
-        emailPara.innerHTML = '<i class="fas fa-envelope"></i> ' + sets.siteEmail;
-      }
-    }
-
-    // Load projects
-    const storedProjects = localStorage.getItem('orioline_projects');
-    let projects = [];
-    if (storedProjects) {
-      projects = JSON.parse(storedProjects);
-    } else {
-      // Default projects
-      projects = [
-        { id: "proj1", title: "Luxury Residence", category: "Residential", location: "Lekki, Lagos", description: "A sophisticated modern home with private pool.", featured: true, image: "" },
-        { id: "proj2", title: "Office Complex", category: "Commercial", location: "Victoria Island", description: "Dynamic workspace designed for collaboration.", featured: true, image: "" },
-        { id: "proj3", title: "Modern Villa", category: "Residential", location: "Banana Island", description: "Minimalist architecture with panoramic glass walls.", featured: true, image: "" },
-        { id: "proj4", title: "Retail Center", category: "Commercial", location: "Ikeja", description: "High-traffic commercial space with vibrant aesthetics.", featured: true, image: "" }
-      ];
-    }
-
-    projects = projects.map((project, index) => ({
-      ...project,
-      featured: typeof project.featured === 'boolean' ? project.featured : index < 4,
-      image: typeof project.image === 'string' ? project.image : ''
-    }));
-
+  async function loadSiteData() {
     const slideshowWrapper = document.getElementById('slideshow-wrapper');
     const indicatorsContainer = document.getElementById('slideIndicators');
+    if (!window.siteBackend || !window.siteBackend.ready) {
+      slideshowWrapper.innerHTML = '<div class="no-featured-projects">The website content service is not configured yet.</div>';
+      return;
+    }
+    let projects;
+    try {
+      const [settings, loadedProjects] = await Promise.all([
+        window.siteBackend.getSettings(),
+        window.siteBackend.getProjects()
+      ]);
+      projects = loadedProjects;
+      const heroTitle = document.querySelector('.hero-content h1');
+      const heroSubtitle = document.querySelector('.hero-content > p');
+      if (heroTitle && settings.hero_title) heroTitle.textContent = settings.hero_title;
+      if (heroSubtitle && settings.hero_subtitle) heroSubtitle.textContent = settings.hero_subtitle;
+      const emailPara = document.querySelector('.contact-right p:first-child');
+      if (emailPara && settings.site_email) {
+        const icon = emailPara.querySelector('i');
+        const link = document.createElement('a');
+        link.href = `mailto:${settings.site_email}`;
+        link.textContent = settings.site_email;
+        emailPara.replaceChildren(icon, document.createTextNode(' '), link);
+      }
+    } catch (error) {
+      slideshowWrapper.innerHTML = '<div class="no-featured-projects">Projects could not be loaded. Please try again later.</div>';
+      console.error('Unable to load public site data:', error);
+      return;
+    }
     const featuredProjects = projects.filter(project => project.featured).slice(0, 4);
     if (!slideshowWrapper || !indicatorsContainer) return;
 
@@ -208,7 +201,7 @@
 
     slideshowWrapper.innerHTML = featuredProjects.map((project, index) => `
       <div class="slide ${index === 0 ? 'active' : ''}">
-        <div class="slide-img${/^data:image\/jpeg;base64,[A-Za-z0-9+/=]+$/.test(project.image) ? '' : ' no-project-image'}"></div>
+        <div class="slide-img${project.image_url ? '' : ' no-project-image'}"></div>
         <div class="slide-content">
           <h3>${escapeSiteHtml(project.title)}</h3>
           <div class="project-meta">
@@ -221,8 +214,8 @@
       </div>
     `).join('');
     featuredProjects.forEach((project, index) => {
-      if(/^data:image\/jpeg;base64,[A-Za-z0-9+/=]+$/.test(project.image)) {
-        slideshowWrapper.querySelectorAll('.slide-img')[index].style.backgroundImage = `url("${project.image}")`;
+      if(project.image_url) {
+        slideshowWrapper.querySelectorAll('.slide-img')[index].style.backgroundImage = `url("${project.image_url.replace(/["\\]/g, '\\$&')}")`;
       }
     });
 
@@ -262,13 +255,7 @@
     });
   }
 
-  // Page view counter
-  let views = parseInt(localStorage.getItem('pageViews') || 0);
-  views++;
-  localStorage.setItem('pageViews', views);
-
-  // Load data on page load
-  document.addEventListener('DOMContentLoaded', loadSiteData);
+  document.addEventListener('DOMContentLoaded', () => loadSiteData());
 </script>
 </body>
-</html>SSSS
+</html>

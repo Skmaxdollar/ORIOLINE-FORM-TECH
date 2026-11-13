@@ -38,8 +38,8 @@ window.addEventListener('click', (e) => {
   if (e.target === modal) closeModal();
 });
 
-// Helper: handle send message
-function handleSendMessage() {
+// Store visitor messages in the shared backend.
+async function handleSendMessage() {
   const nameInput = document.getElementById('messageName');
   const emailInput = document.getElementById('messageEmail');
   const textInput = document.getElementById('messageText');
@@ -50,8 +50,8 @@ function handleSendMessage() {
     return false;
   }
   
-  if (emailInput && emailInput.value.trim() !== "" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value.trim())) {
-    alert("Please enter a valid email address (or leave blank).");
+  if (!emailInput || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value.trim())) {
+    alert("Please enter a valid email address so our team can reply.");
     return false;
   }
 
@@ -60,20 +60,28 @@ function handleSendMessage() {
     return false;
   }
 
-  const name = nameInput ? nameInput.value.trim() : '';
-  const email = emailInput ? emailInput.value.trim() : '';
-  const messageText = textInput ? textInput.value.trim() : '';
-  const subject = 'Website project enquiry';
-  const body = [
-    `Name: ${name}`,
-    `Email: ${email || 'Not provided'}`,
-    '',
-    'Message:',
-    messageText
-  ].join('\n');
-  const mailto = `mailto:hello@oriolineform.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  document.getElementById('emailDraftLink').href = mailto;
-  openModal();
+  if (!window.siteBackend || !window.siteBackend.ready) {
+    alert(window.siteBackend ? window.siteBackend.error : "The message service is unavailable.");
+    return false;
+  }
+
+  const sendButton = document.getElementById('sendMessageFooterBtn');
+  if (sendButton) sendButton.disabled = true;
+  try {
+    await window.siteBackend.submitMessage({
+      name: nameInput.value.trim(),
+      email: emailInput.value.trim(),
+      message: textInput.value.trim()
+    });
+    nameInput.value = '';
+    emailInput.value = '';
+    textInput.value = '';
+    openModal();
+  } catch (error) {
+    alert(`Your message could not be sent. Please try again. ${error.message || ''}`);
+  } finally {
+    if (sendButton) sendButton.disabled = false;
+  }
   return true;
 }
 

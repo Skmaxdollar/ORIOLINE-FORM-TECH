@@ -131,21 +131,18 @@
           <a href="index.html">Home</a>
           <a href="portfolio.html">Portfolio</a>
           <a href="index.html#contact">Contact</a>
+          <a href="admin/login.html">Admin</a>
         </div>
       </div>
     </div>
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="supabase-client.js"></script>
   <script src="script.js"></script>
   <script>
-    function loadPortfolioPage() {
-      const storedProjects = localStorage.getItem('orioline_projects');
-      const projects = storedProjects ? JSON.parse(storedProjects) : [
-        { id: 'proj1', title: 'Luxury Residence', category: 'Residential', location: 'Lekki, Lagos', description: 'A sophisticated modern home with private pool.', featured: true, image: '' },
-        { id: 'proj2', title: 'Office Complex', category: 'Commercial', location: 'Victoria Island', description: 'Dynamic workspace designed for collaboration.', featured: true, image: '' },
-        { id: 'proj3', title: 'Modern Villa', category: 'Residential', location: 'Banana Island', description: 'Minimalist architecture with panoramic glass walls.', featured: true, image: '' },
-        { id: 'proj4', title: 'Retail Center', category: 'Commercial', location: 'Ikeja', description: 'High-traffic commercial space with vibrant aesthetics.', featured: true, image: '' }
-      ];
+    async function loadPortfolioPage() {
       const grid = document.getElementById('portfolioGrid');
       const count = document.getElementById('projectCount');
 
@@ -159,6 +156,20 @@
         "'": '&#39;'
       }[character]));
 
+      if (!window.siteBackend || !window.siteBackend.ready) {
+        count.textContent = 'The portfolio service is not configured yet.';
+        return;
+      }
+
+      let projects;
+      try {
+        projects = await window.siteBackend.getProjects();
+      } catch (error) {
+        count.textContent = 'Projects could not be loaded. Please try again later.';
+        console.error('Unable to load public projects:', error);
+        return;
+      }
+
       if (projects.length === 0) {
         count.textContent = 'No projects are listed yet. Please check back soon.';
         grid.innerHTML = '<div style="grid-column:1/-1; color:#6c6c7e; padding:24px; background:#faf9f5; border-radius:24px; border:1px solid #ece9df;">Our portfolio is being updated.</div>';
@@ -167,10 +178,10 @@
 
       count.textContent = `${projects.length} project${projects.length === 1 ? '' : 's'} available in the portfolio.`;
       grid.innerHTML = projects.map((project, index) => {
-        const image = typeof project.image === 'string' && /^data:image\/jpeg;base64,[A-Za-z0-9+/=]+$/.test(project.image)
-          ? `<img class="portfolio-image" src="${escapePortfolioHtml(project.image)}" alt="${escapePortfolioHtml(project.title)}">`
+        const image = project.image_url
+          ? `<img class="portfolio-image" src="${escapePortfolioHtml(project.image_url)}" alt="${escapePortfolioHtml(project.title)}">`
           : '';
-        const featured = typeof project.featured === 'boolean' ? project.featured : index < 4;
+        const featured = project.featured;
         return `
         <div class="portfolio-card">
           ${image}
@@ -189,7 +200,7 @@
       }).join('');
     }
 
-    document.addEventListener('DOMContentLoaded', loadPortfolioPage);
+    document.addEventListener('DOMContentLoaded', () => loadPortfolioPage());
   </script>
 </body>
 </html>
