@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin Dashboard | ORIOLINE & FORM TECH</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <div class="admin-shell">
+    <aside class="sidebar">
+      <a class="brand" href="../index.html">ORIOLINE <span>&</span> FORM TECH</a>
+      <nav aria-label="Admin navigation">
+        <button class="nav-item active" data-tab="dashboard">Dashboard</button>
+        <button class="nav-item" data-tab="projects">Projects</button>
+        <button class="nav-item" data-tab="messages">Messages <span id="unreadBadge" hidden></span></button>
+        <button class="nav-item" data-tab="settings">Site settings</button>
+      </nav>
+      <a class="site-link" href="../index.html">View website</a>
+    </aside>
+    <main class="main-content">
+      <header class="topbar">
+        <div>
+          <p id="connectionStatus" role="status">Connecting to backend...</p>
+          <h1 id="pageTitle">Dashboard</h1>
+        </div>
+        <button class="secondary-button" id="logoutBtn" type="button">Log out</button>
+      </header>
+      <div id="adminAlert" class="alert" role="status" hidden></div>
+
+      <section id="dashboardTab" class="tab-panel">
+        <div class="stats-grid">
+          <article class="card"><span>Projects</span><strong id="projectCount">0</strong></article>
+          <article class="card"><span>Messages</span><strong id="messageCount">0</strong></article>
+          <article class="card"><span>Unread messages</span><strong id="unreadCount">0</strong></article>
+          <article class="card"><span>Featured projects</span><strong id="featuredCount">0</strong></article>
+        </div>
+        <section class="panel">
+          <h2>Recent messages</h2>
+          <div class="table-wrap"><table><thead><tr><th>Name</th><th>Email</th><th>Message</th><th>Received</th></tr></thead><tbody id="recentMessages"></tbody></table></div>
+        </section>
+      </section>
+
+      <section id="projectsTab" class="tab-panel" hidden>
+        <section class="panel">
+          <div class="section-heading"><h2>Portfolio projects</h2><button class="primary-button" id="addProjectBtn" type="button">Add project</button></div>
+          <div class="table-wrap"><table><thead><tr><th>Project</th><th>Category</th><th>Location</th><th>Featured</th><th>Actions</th></tr></thead><tbody id="projectsList"></tbody></table></div>
+        </section>
+      </section>
+
+      <section id="messagesTab" class="tab-panel" hidden>
+        <section class="panel">
+          <div class="section-heading"><h2>Contact messages</h2><button class="secondary-button" id="clearMessagesBtn" type="button">Delete all</button></div>
+          <div class="table-wrap"><table><thead><tr><th>Name</th><th>Email</th><th>Message</th><th>Received</th><th></th></tr></thead><tbody id="messagesList"></tbody></table></div>
+        </section>
+      </section>
+
+      <section id="settingsTab" class="tab-panel" hidden>
+        <section class="panel settings-panel">
+          <h2>Website settings</h2>
+          <label for="settingEmail">Contact email</label>
+          <input id="settingEmail" type="email" maxlength="254">
+          <label for="settingHeroTitle">Homepage headline</label>
+          <input id="settingHeroTitle" type="text" maxlength="160">
+          <label for="settingHeroSubtitle">Homepage introduction</label>
+          <textarea id="settingHeroSubtitle" rows="4" maxlength="500"></textarea>
+          <button class="primary-button" id="saveSettingsBtn" type="button">Save settings</button>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="projectDialog">
+    <form method="dialog" id="projectForm">
+      <div class="section-heading"><h2 id="projectDialogTitle">Add project</h2><button class="icon-button" id="closeProjectBtn" type="button" aria-label="Close">×</button></div>
+      <input id="projectId" type="hidden">
+      <label for="projectTitle">Title *</label>
+      <input id="projectTitle" type="text" maxlength="160" required>
+      <label for="projectCategory">Category</label>
+      <input id="projectCategory" type="text" maxlength="100">
+      <label for="projectLocation">Location</label>
+      <input id="projectLocation" type="text" maxlength="160">
+      <label for="projectDescription">Description</label>
+      <textarea id="projectDescription" rows="4" maxlength="2000"></textarea>
+      <label for="projectImage">Project image (JPEG, PNG, or WebP; up to 10 MB)</label>
+      <input id="projectImage" type="file" accept="image/jpeg,image/png,image/webp">
+      <img id="imagePreview" alt="Project image preview" hidden>
+      <button class="secondary-button" id="removeImageBtn" type="button" hidden>Remove current image</button>
+      <label class="checkbox-label"><input id="projectFeatured" type="checkbox"> Feature on homepage (maximum 4)</label>
+      <div class="dialog-actions"><button class="secondary-button" id="cancelProjectBtn" type="button">Cancel</button><button class="primary-button" id="saveProjectBtn" type="button">Save project</button></div>
+    </form>
+  </dialog>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../supabase-config.js"></script>
+  <script src="../supabase-client.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>

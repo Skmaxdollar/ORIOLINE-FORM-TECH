@@ -1,0 +1,14 @@
+:root { font-family: Inter, Arial, sans-serif; color: #1e1e2a; background: #1e1e2a; }
+* { box-sizing: border-box; }
+body { min-height: 100vh; margin: 0; padding: 24px; display: grid; place-items: center; background: radial-gradient(ellipse at 20% 80%, #c6a43b33, transparent 35%), linear-gradient(135deg, #1e1e2a, #30303e); }
+.login-card { width: min(430px, 100%); padding: 38px; border-radius: 24px; background: #fff; box-shadow: 0 20px 60px #0004; }
+.brand { display: inline-block; margin-bottom: 30px; color: #1e1e2a; font-size: .9rem; font-weight: 700; text-decoration: none; }
+.brand span { color: #c6a43b; }
+h1 { margin: 0 0 8px; font-size: 1.7rem; }
+.login-card > p { margin-bottom: 26px; color: #6c6c7e; line-height: 1.5; }
+label { display: block; margin: 16px 0 6px; font-weight: 600; }
+input { width: 100%; padding: 12px 14px; border: 1px solid #d8d7d1; border-radius: 10px; font: inherit; }
+button { width: 100%; margin-top: 22px; padding: 13px; border: 0; border-radius: 24px; background: #c6a43b; color: #1e1e2a; font: inherit; font-weight: 700; cursor: pointer; }
+button:disabled { opacity: .6; cursor: wait; }
+.error { min-height: 1.2em; color: #a52c2c; font-size: .9rem; }
+.back-link { color: #6c6c7e; }
